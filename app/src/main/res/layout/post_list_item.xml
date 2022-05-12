@@ -13,6 +13,8 @@
         android:contentDescription="@string/avatar_description"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"
         tools:srcCompat="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -23,14 +25,14 @@
         android:layout_marginEnd="@dimen/icon_margin"
         android:ellipsize="end"
         android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@id/date"
+        app:layout_constraintBottom_toTopOf="@id/publicationDate"
         app:layout_constraintEnd_toStartOf="@id/menu"
         app:layout_constraintStart_toEndOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@+id/avatar"
         tools:text="Author name" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/date"
+        android:id="@+id/publicationDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="end"
@@ -55,10 +57,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="avatar, date, menu" />
+        app:constraint_referenced_ids="avatar, publicationDate, menu" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/post"
+        android:id="@+id/contentPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/common_spacing"
@@ -71,7 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="post" />
+        app:constraint_referenced_ids="contentPost" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/like"

@@ -2,7 +2,6 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import androidx.annotation.DrawableRes
 import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.dto.Post
@@ -16,10 +15,20 @@ class MainActivity : AppCompatActivity() {
 
         val post = Post(
             id = 0L,
-            author = "Jim",
+            author = "Person",
             content = "Any content",
             published = "10.05.2022"
         )
+
+//        ------------------------------------
+//        binding.root.setOnClickListener {
+//            println("click root")
+//        }
+//
+//        binding.like.setOnClickListener {
+//            println("click like")
+//        }
+//        ------------------------------------
 
         binding.render(post)
         binding.like.setOnClickListener {

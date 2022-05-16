@@ -2,46 +2,33 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.viewModel.PostViewModel
 import kotlin.math.floor
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel by viewModels<PostViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val binding = PostListItemBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val post = Post(
-            id = 0L,
-            author = "Person",
-            content = "Any content",
-            published = "10.05.2022"
-        )
+        viewModel.data.observe(this) { post ->
+            binding.render(post)
+        }
 
-//        ------------------------------------
-//        binding.root.setOnClickListener {
-//            println("click root")
-//        }
-//
-//        binding.like.setOnClickListener {
-//            println("click like")
-//        }
-//        ------------------------------------
-
-        binding.render(post)
         binding.like.setOnClickListener {
-            post.likedByMe = !post.likedByMe
-            if (post.likedByMe) post.like++ else post.like--
-            binding.likeText.text = shareCount(post.like)
-            binding.like.setImageResource(getLikeIconResId(post.likedByMe))
+            viewModel.onLikeClicked()
         }
 
         binding.share.setOnClickListener {
-            post.share += 1
-            binding.shareText.text = shareCount(post.share)
-            binding.share.setImageResource(R.drawable.ic_shared_24dp)
+            viewModel.onShareClicked()
         }
     }
 
@@ -49,9 +36,10 @@ class MainActivity : AppCompatActivity() {
         authorName.text = post.author
         contentPost.text = post.content
         publicationDate.text = post.published
-        likeText.text = post.like.toString()
-        shareText.text = post.share.toString()
-//        like.setImageResource(getLikeIconResId(post.likedByMe))    //Для чего эта строка ???
+        likeText.text = shareCount(post.like)
+        shareText.text = shareCount(post.share)
+        like.setImageResource(getLikeIconResId(post.likedByMe))
+        share.setImageResource(getShareIconResId(post.shareByMe))
     }
 
     private fun shareCount(value: Int) =
@@ -67,4 +55,9 @@ class MainActivity : AppCompatActivity() {
     private fun getLikeIconResId(liked: Boolean) =
         if (liked) R.drawable.ic_like_24dp
         else R.drawable.ic_like_border_24dp
+
+    @DrawableRes
+    private fun getShareIconResId(shared: Boolean) =
+        if (shared) R.drawable.ic_shared_24dp
+        else R.drawable.ic_share_24dp
 }

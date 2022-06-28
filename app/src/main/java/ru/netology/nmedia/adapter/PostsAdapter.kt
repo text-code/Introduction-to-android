@@ -1,16 +1,12 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import androidx.annotation.DrawableRes
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.R
-import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.databinding.PostListItemBinding
 import ru.netology.nmedia.dto.Post
 import kotlin.math.floor
@@ -58,6 +54,7 @@ internal class PostsAdapter(
         init {
             binding.like.setOnClickListener { listener.onLikeClicked(post) }
             binding.share.setOnClickListener { listener.onShareClicked(post) }
+            binding.menu.setOnClickListener { popupMenu.show() }
         }
 
         fun bind(post: Post) {
@@ -67,15 +64,14 @@ internal class PostsAdapter(
                 authorName.text = post.author
                 contentPost.text = post.content
                 publicationDate.text = post.published
-                likeText.text = shareCount(post.like)
-                shareText.text = shareCount(post.share)
-                like.setImageResource(getLikeIconResId(post.likedByMe))
-                share.setImageResource(getShareIconResId(post.shareByMe))
-                menu.setOnClickListener { popupMenu.show() }
+                share.text = counter(post.share)
+                share.isChecked = post.shareByMe
+                like.text = counter(post.like)
+                like.isChecked = post.likedByMe
             }
         }
 
-        private fun shareCount(value: Int) =
+        private fun counter(value: Int) =
             when {
                 (value in 1_000..1_099) -> "1K"
                 (value in 1_100..9_999) -> (floor((value / 100).toDouble()) / 10).toString() + "K"
@@ -83,16 +79,6 @@ internal class PostsAdapter(
                 (value >= 1_000_000) -> (value / 1_000_000).toString() + "M"
                 else -> value.toString()
             }
-
-        @DrawableRes
-        private fun getLikeIconResId(liked: Boolean) =
-            if (liked) R.drawable.ic_like_24dp
-            else R.drawable.ic_like_border_24dp
-
-        @DrawableRes
-        private fun getShareIconResId(shared: Boolean) =
-            if (shared) R.drawable.ic_shared_24dp
-            else R.drawable.ic_share_24dp
     }
 
     private object DiffCallback : DiffUtil.ItemCallback<Post>() {

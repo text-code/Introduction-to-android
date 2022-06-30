@@ -6,43 +6,69 @@ import ru.netology.nmedia.dto.Post
 
 class InMemoryPostRepository : PostRepository {
 
+    private var nextId = GENERATED_POSTS_AMOUNT.toLong()
+
+    private val posts
+        get() = checkNotNull(data.value) {
+            "Data value should not be null"
+        }
+
     override val data = MutableLiveData(
-        Post(
-            id = 0L,
-            author = "Person",
-            content = "Any content",
-            published = "10.05.2022"
-        )
+        List(GENERATED_POSTS_AMOUNT) { index ->
+            Post(
+                id = index + 1L,
+                author = "Person",
+                content = "Any content $index",
+                published = "10.05.2022"
+            )
+        }
     )
 
-    override fun like() {
-        val currentPost = checkNotNull(data.value) {
-            "Data value should not be null"
+    override fun like(postId: Long, postLike: Int) {
+        data.value = posts.map {
+            if (it.id != postId) it
+            else it.copy(
+                likedByMe = !it.likedByMe,
+                like = if (!it.likedByMe) postLike + 1 else postLike - 1
+            )
         }
-
-        val likeCount = currentPost.like
-
-        val likePost = currentPost.copy(
-            likedByMe = !currentPost.likedByMe,
-            like = if (!currentPost.likedByMe) likeCount + 1 else likeCount - 1
-        )
-
-        data.value = likePost
     }
 
-    override fun share() {
-        val currentPost = checkNotNull(data.value) {
-            "Data value should not be null"
+    override fun share(postId: Long, postShare: Int) {
+        data.value = posts.map {
+            if (it.id != postId) it
+            else
+                it.copy(
+                    share = postShare + 1,
+                    shareByMe = true
+                )
         }
-
-        val sharePost = currentPost.share
-
-        val clickShare = currentPost.copy(
-            share = sharePost + 1,
-            shareByMe = true
-        )
-
-        data.value = clickShare
     }
 
+    override fun delete(postId: Long) {
+        println("delete")
+        data.value = posts.filter { it.id != postId }
+    }
+
+    override fun save(post: Post) {
+        if (post.id == PostRepository.NEW_POST_ID) insert(post) else update(post)
+    }
+
+    // region save
+    private fun insert(post: Post) {
+        data.value = listOf(
+            post.copy(id = ++nextId)
+        ) + posts
+    }
+
+    private fun update(post: Post) {
+        data.value = posts.map {
+            if (it.id == post.id) post else it
+        }
+    }
+    //endregion save
+
+    private companion object {
+        const val GENERATED_POSTS_AMOUNT = 10
+    }
 }

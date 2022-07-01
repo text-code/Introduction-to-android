@@ -37,10 +37,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     // region PostInteractionListener
 
     override fun onLikeClicked(post: Post) =
-        repository.like(post.id, post.like)
+        repository.like(post.id)
 
     override fun onShareClicked(post: Post) =
-        repository.share(post.id, post.share)
+        repository.share(post.id)
 
     override fun onRemoveClicked(post: Post) =
         repository.delete(post.id)

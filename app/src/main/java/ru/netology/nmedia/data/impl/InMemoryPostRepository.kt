@@ -24,22 +24,32 @@ class InMemoryPostRepository : PostRepository {
         }
     )
 
-    override fun like(postId: Long, postLike: Int) {
+    override fun like(postId: Long) {
         data.value = posts.map {
             if (it.id != postId) it
             else it.copy(
                 likedByMe = !it.likedByMe,
-                like = if (!it.likedByMe) postLike + 1 else postLike - 1
+                like = if (!it.likedByMe) it.like + 1 else it.like - 1
             )
         }
     }
 
-    override fun share(postId: Long, postShare: Int) {
+//    override fun like(postId: Long, postLike: Int) {
+//        data.value = posts.map {
+//            if (it.id != postId) it
+//            else it.copy(
+//                likedByMe = !it.likedByMe,
+//                like = if (!it.likedByMe) postLike + 1 else postLike - 1
+//            )
+//        }
+//    }
+
+    override fun share(postId: Long) {
         data.value = posts.map {
             if (it.id != postId) it
             else
                 it.copy(
-                    share = postShare + 1,
+                    share = it.share + 1,
                     shareByMe = true
                 )
         }

@@ -30,7 +30,6 @@
 
     <style name="MenuButton" parent="Widget.MaterialComponents.Button.TextButton.Icon">
         <item name="icon">@drawable/ic_menu_24dp</item>
-        <item name="iconTint">@color/color_menu</item>
         <item name="android:minWidth">0dp</item>
     </style>
 </resources>

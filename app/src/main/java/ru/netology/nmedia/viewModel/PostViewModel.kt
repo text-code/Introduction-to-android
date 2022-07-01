@@ -30,6 +30,10 @@ class PostViewModel : ViewModel(), PostInteractionListener {
         currentPost.value = null
     }
 
+    fun onCancelButtonClicked() {
+        currentPost.value = null
+    }
+
     // region PostInteractionListener
 
     override fun onLikeClicked(post: Post) =

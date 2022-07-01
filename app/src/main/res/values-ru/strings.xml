@@ -8,4 +8,7 @@
     <string name="edit">Изменить</string>
     <string name="cancel">Отмена</string>
     <string name="edit_message">Изменить Сообщение</string>
+    <string name="like">Лайк</string>
+    <string name="share">Поделиться</string>
+    <string name="menu">Меню</string>
 </resources>

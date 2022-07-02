@@ -1,5 +1,6 @@
 package ru.netology.nmedia
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -48,6 +49,18 @@ class MainActivity : AppCompatActivity() {
             binding.contentEditText.setText(currentPost?.content)
             binding.groupEdit.isVisible = currentPost != null
             binding.editMessageText.text = currentPost?.content
+        }
+
+        viewModel.shareEvent.observe(this) { post ->
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+
+                putExtra(Intent.EXTRA_TEXT, post.content)
+            }
+
+            val shareIntent = Intent.createChooser(intent, getString(R.string.share))
+            startActivity(shareIntent)
         }
     }
 }

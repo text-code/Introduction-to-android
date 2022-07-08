@@ -34,16 +34,6 @@ class InMemoryPostRepository : PostRepository {
         }
     }
 
-//    override fun like(postId: Long, postLike: Int) {
-//        data.value = posts.map {
-//            if (it.id != postId) it
-//            else it.copy(
-//                likedByMe = !it.likedByMe,
-//                like = if (!it.likedByMe) postLike + 1 else postLike - 1
-//            )
-//        }
-//    }
-
     override fun share(postId: Long) {
         data.value = posts.map {
             if (it.id != postId) it
@@ -79,6 +69,6 @@ class InMemoryPostRepository : PostRepository {
     //endregion save
 
     private companion object {
-        const val GENERATED_POSTS_AMOUNT = 10
+        const val GENERATED_POSTS_AMOUNT = 3
     }
 }

@@ -37,10 +37,9 @@ class NewPostActivity : AppCompatActivity() {
         const val POST_CONTENT_EXTRA_KEY = "postContent"
     }
 
-    object ResultContract : ActivityResultContract<Unit, String?>() {
-        override fun createIntent(context: Context, input: Unit) =
+    object ResultContract : ActivityResultContract<String?, String?>() {
+        override fun createIntent(context: Context, input: String?) =
             Intent(context, NewPostActivity::class.java)
-
 
         override fun parseResult(resultCode: Int, intent: Intent?): String? {
             if (resultCode != Activity.RESULT_OK) return null

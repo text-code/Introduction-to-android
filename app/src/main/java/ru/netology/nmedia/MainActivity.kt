@@ -3,7 +3,6 @@ package ru.netology.nmedia
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.result.launch
 import androidx.activity.viewModels
 import ru.netology.nmedia.activity.NewPostActivity
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -41,11 +40,17 @@ class MainActivity : AppCompatActivity() {
         val activityLauncher = registerForActivityResult(
             NewPostActivity.ResultContract
         ) { postContent: String? ->
-            postContent?.let(viewModel::onSaveButtonClicked)
+                postContent?.let(viewModel::onSaveButtonClicked)
         }
 
         binding.addPost.setOnClickListener {
-            activityLauncher.launch()
+            activityLauncher.launch(toString())
+        }
+
+        viewModel.currentPost.observe(this) { currentPost ->
+            if (currentPost != null) {
+                activityLauncher.launch(currentPost.content)
+            }
         }
     }
 }

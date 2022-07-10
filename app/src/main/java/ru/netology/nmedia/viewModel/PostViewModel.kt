@@ -17,7 +17,7 @@ class PostViewModel(
 
     val data by repository::data
 
-    private val currentPost = MutableLiveData<Post?>(null)
+    val currentPost = MutableLiveData<Post?>(null)
 
     val shareEvent = SingleLiveEvent<Post>()
 

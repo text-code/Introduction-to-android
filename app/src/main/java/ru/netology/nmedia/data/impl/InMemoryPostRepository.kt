@@ -3,6 +3,7 @@ package ru.netology.nmedia.data.impl
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.util.SingleLiveEvent
 
 class InMemoryPostRepository : PostRepository {
 

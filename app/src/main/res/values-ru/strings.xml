@@ -11,4 +11,6 @@
     <string name="like">Лайк</string>
     <string name="share">Поделиться</string>
     <string name="menu">Меню</string>
+    <string name="description_post_save">Сохранить пост</string>
+    <string name="add_post">Добавить пост</string>
 </resources>

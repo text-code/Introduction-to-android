@@ -30,6 +30,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.NewPostActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
+
     </application>
 
 </manifest>

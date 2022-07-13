@@ -11,7 +11,8 @@
         android:theme="@style/Theme.IntroductionToAndroid">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".activity.ShareActivity"
+            android:name=".ui.ShareActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -29,11 +30,6 @@
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".activity.NewPostActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
 
     </application>
 

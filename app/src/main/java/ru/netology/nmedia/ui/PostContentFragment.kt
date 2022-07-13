@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import ru.netology.nmedia.databinding.PostContentFragmentBinding
+import ru.netology.nmedia.databinding.FragmentPostContentBinding
 
 class PostContentFragment : Fragment() {
 
@@ -17,7 +17,7 @@ class PostContentFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = PostContentFragmentBinding.inflate(
+    ) = FragmentPostContentBinding.inflate(
         layoutInflater,
         container,
         false
@@ -30,7 +30,7 @@ class PostContentFragment : Fragment() {
         }
     }.root
 
-    private fun onOkButtonClicked(binding: PostContentFragmentBinding) {
+    private fun onOkButtonClicked(binding: FragmentPostContentBinding) {
         val postContent = binding.edit.text
         if (!postContent.isNullOrBlank()) {
             val resultBundle = Bundle(1)
@@ -44,16 +44,4 @@ class PostContentFragment : Fragment() {
         const val REQUEST_KEY = "requestKey"
         const val RESULT_KEY = "postNewContent"
     }
-//
-//    object ResultContract : ActivityResultContract<String?, String?>() {
-//        override fun createIntent(context: Context, input: String?) =
-//            Intent(context, PostContentFragment::class.java)
-//
-//        override fun parseResult(resultCode: Int, intent: Intent?): String? {
-//            if (resultCode != Activity.RESULT_OK) return null
-//            intent ?: return null
-//
-//            return intent.getStringExtra(POST_CONTENT_EXTRA_KEY)
-//        }
-//    }
 }

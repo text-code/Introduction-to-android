@@ -38,7 +38,7 @@ class PostViewModel(
         currentPost.value = null
     }
 
-    fun addClicked() {
+    fun onAddClicked() {
         navigateToPostContentScreenEvent.call()
     }
 

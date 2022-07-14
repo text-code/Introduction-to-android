@@ -20,7 +20,8 @@ class InMemoryPostRepository : PostRepository {
                 id = index + 1L,
                 author = "Person",
                 content = "Any content $index",
-                published = "10.05.2022"
+                published = "10.05.2022",
+                video = "https://www.youtube.com/watch?v=OWX9kov3PX0"
             )
         }
     )
@@ -44,6 +45,10 @@ class InMemoryPostRepository : PostRepository {
                     shareByMe = true
                 )
         }
+    }
+
+    override fun video(postId: Long) {
+        TODO("Not yet implemented")
     }
 
     override fun delete(postId: Long) {

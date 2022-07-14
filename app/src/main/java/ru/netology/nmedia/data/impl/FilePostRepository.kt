@@ -73,6 +73,10 @@ class FilePostRepository(
         }
     }
 
+    override fun video(postId: Long) {
+        TODO("Not yet implemented")
+    }
+
     override fun delete(postId: Long) {
         println("delete")
         posts = posts.filter { it.id != postId }

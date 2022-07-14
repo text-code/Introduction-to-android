@@ -1,9 +1,9 @@
 package ru.netology.nmedia
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import ru.netology.nmedia.activity.NewPostActivity
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -25,6 +25,15 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
+        viewModel.youTubeEvent.observe(this) { url ->
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+
+                putExtra(Intent.EXTRA_TEXT, url)
+            }
+        }
+
         viewModel.shareEvent.observe(this) { post ->
             val intent = Intent().apply {
                 action = Intent.ACTION_SEND
@@ -37,10 +46,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(shareIntent)
         }
 
+//        val activityLauncher = registerForActivityResult(
+//            NewPostActivity.ResultContract
+//        ) { postContent: String? ->
+//            postContent?.let(viewModel::onSaveButtonClicked)
+//        }
+
         val activityLauncher = registerForActivityResult(
             NewPostActivity.ResultContract
         ) { postContent: String? ->
-                postContent?.let(viewModel::onSaveButtonClicked)
+            postContent?.let(viewModel::onSaveButtonClicked) ?: run {
+                viewModel.currentPost.value = null
+            }
         }
 
         binding.addPost.setOnClickListener {

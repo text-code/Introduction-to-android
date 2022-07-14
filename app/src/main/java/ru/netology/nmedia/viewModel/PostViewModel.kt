@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewModel
 
 import android.app.Application
+import android.provider.MediaStore
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.adapter.PostInteractionListener
@@ -21,6 +22,8 @@ class PostViewModel(
 
     val shareEvent = SingleLiveEvent<Post>()
 
+    val youTubeEvent = SingleLiveEvent<String>()
+
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
 
@@ -30,7 +33,8 @@ class PostViewModel(
             id = PostRepository.NEW_POST_ID,
             author = "Me",
             content = content,
-            published = "Today"
+            published = "Today",
+            video = "https://www.youtube.com/watch?v=OWX9kov3PX0"
         )
         repository.save(post)
         currentPost.value = null
@@ -44,6 +48,10 @@ class PostViewModel(
     override fun onShareClicked(post: Post) {
         repository.share(post.id)
         shareEvent.value = post
+    }
+
+    override fun onVideoClicked(post: Post) {
+        youTubeEvent.value = post.video
     }
 
     override fun onRemoveClicked(post: Post) =

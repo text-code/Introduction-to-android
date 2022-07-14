@@ -15,6 +15,7 @@ class NewPostActivity : AppCompatActivity() {
         val binding = ActivityNewPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.edit.setText(intent?.extras?.getString(Intent.EXTRA_TEXT))
         binding.edit.requestFocus()
 
         binding.ok.setOnClickListener {
@@ -38,8 +39,13 @@ class NewPostActivity : AppCompatActivity() {
     }
 
     object ResultContract : ActivityResultContract<String?, String?>() {
-        override fun createIntent(context: Context, input: String?) =
-            Intent(context, NewPostActivity::class.java)
+        override fun createIntent(context: Context, input: String?): Intent {
+            val intent = Intent(context, NewPostActivity::class.java)
+            if (input != "ru.netology.nmedia.MainActivity@55ad044")
+                intent.putExtra(Intent.EXTRA_TEXT, input)
+
+            return intent
+        }
 
         override fun parseResult(resultCode: Int, intent: Intent?): String? {
             if (resultCode != Activity.RESULT_OK) return null

@@ -71,6 +71,7 @@
         android:id="@+id/youTube"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@mipmap/ic_youtube"
         android:src="@drawable/ic_play_circle_24dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/barrierUnderText"

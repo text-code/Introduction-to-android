@@ -10,8 +10,6 @@ interface PostRepository {
 
     fun share(postId: Long)
 
-    fun video(postId: Long)
-
     fun delete(postId: Long)
 
     fun save(post: Post)

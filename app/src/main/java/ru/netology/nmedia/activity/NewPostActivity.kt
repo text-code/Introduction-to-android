@@ -39,13 +39,8 @@ class NewPostActivity : AppCompatActivity() {
     }
 
     object ResultContract : ActivityResultContract<String?, String?>() {
-        override fun createIntent(context: Context, input: String?): Intent {
-            val intent = Intent(context, NewPostActivity::class.java)
-            if (input != "ru.netology.nmedia.MainActivity@55ad044")
-                intent.putExtra(Intent.EXTRA_TEXT, input)
-
-            return intent
-        }
+        override fun createIntent(context: Context, input: String?) =
+            Intent(context, NewPostActivity::class.java).putExtra(Intent.EXTRA_TEXT, input)
 
         override fun parseResult(resultCode: Int, intent: Intent?): String? {
             if (resultCode != Activity.RESULT_OK) return null

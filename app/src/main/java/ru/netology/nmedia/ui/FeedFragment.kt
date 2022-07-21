@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.util.StringArg
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
@@ -30,21 +32,6 @@ class FeedFragment : Fragment() {
 
             val shareIntent = Intent.createChooser(intent, getString(R.string.share))
             startActivity(shareIntent)
-
-            setFragmentResultListener(
-                requestKey = PostContentFragment.REQUEST_KEY
-            ) { requestKey, bundle ->
-                if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-                val newPostContent = bundle.getString(
-                    PostContentFragment.RESULT_KEY
-                ) ?: return@setFragmentResultListener
-                viewModel.onSaveButtonClicked(newPostContent)
-            }
-
-            viewModel.navigateToPostContentScreenEvent.observe(viewLifecycleOwner) { initialContent ->
-                val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
-                findNavController().navigate(direction)
-            }
         }
     }
 
@@ -53,13 +40,40 @@ class FeedFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = FragmentFeedBinding.inflate(layoutInflater, container, false).also { binding ->
+
         val adapter = PostsAdapter(viewModel)
+
         binding.postsRecyclerView.adapter = adapter
+
         viewModel.data.observe(viewLifecycleOwner) { posts ->
             adapter.submitList(posts)
         }
+
         binding.addPost.setOnClickListener {
             viewModel.onAddClicked()
         }
+
+        setFragmentResultListener(
+            requestKey = PostContentFragment.REQUEST_KEY
+        ) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
+            val newPostContent = bundle.getString(
+                PostContentFragment.RESULT_KEY
+            ) ?: return@setFragmentResultListener
+            viewModel.onSaveButtonClicked(newPostContent)
+        }
+
+        viewModel.navigateToPostContentScreenEvent.observe(viewLifecycleOwner) { initialContent ->
+            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
+            findNavController().navigate(direction)
+        }
+
+        viewModel.contentPost.observe(viewLifecycleOwner) {
+            findNavController().navigate(R.id.action_feedFragment_to_postDisplayFragment)
+        }
     }.root
+
+    companion object {
+        var Bundle.textArg: String? by StringArg
+    }
 }

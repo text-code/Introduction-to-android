@@ -54,6 +54,7 @@ internal class PostsAdapter(
         init {
             binding.like.setOnClickListener { listener.onLikeClicked(post) }
             binding.share.setOnClickListener { listener.onShareClicked(post) }
+            binding.contentPost.setOnClickListener { listener.onContentClicked(post) }
             binding.menu.setOnClickListener { popupMenu.show() }
         }
 

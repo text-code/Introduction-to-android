@@ -8,6 +8,7 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.databinding.FragmentPostContentBinding
+import ru.netology.nmedia.ui.FeedFragment.Companion.textArg
 
 class PostContentFragment : Fragment() {
 
@@ -23,6 +24,9 @@ class PostContentFragment : Fragment() {
         false
     ).also { binding ->
         super.onCreate(savedInstanceState)
+
+        arguments?.textArg?.let(binding.edit::setText)
+
         binding.edit.setText(args.initialContent)
         binding.edit.requestFocus()
         binding.ok.setOnClickListener {

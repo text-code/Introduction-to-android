@@ -19,7 +19,10 @@ class PostViewModel(
     val data by repository::data
 
     val shareEvent = SingleLiveEvent<String>()
+
     val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+
+    val contentPost = SingleLiveEvent<Post>()
 
     val currentPost = MutableLiveData<Post?>(null)
 
@@ -58,6 +61,10 @@ class PostViewModel(
     override fun onEditClicked(post: Post) {
         currentPost.value = post
         navigateToPostContentScreenEvent.value = post.content
+    }
+
+    override fun onContentClicked(post: Post) {
+        contentPost.value = post
     }
 
     // endregion PostInteractionListener

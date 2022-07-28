@@ -20,11 +20,11 @@ class PostViewModel(
 
     val shareEvent = SingleLiveEvent<String>()
 
-    val navigateToPostContentScreenEvent = SingleLiveEvent<String>()
+    val contentPost = SingleLiveEvent<String>()
 
-    val contentPost = SingleLiveEvent<Post>()
+    val selectedPost = SingleLiveEvent<Post>()
 
-    val currentPost = MutableLiveData<Post?>(null)
+    private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
         if (content.isBlank()) return
@@ -42,7 +42,7 @@ class PostViewModel(
     }
 
     fun onAddClicked() {
-        navigateToPostContentScreenEvent.call()
+        contentPost.call()
     }
 
     // region PostInteractionListener
@@ -60,11 +60,11 @@ class PostViewModel(
 
     override fun onEditClicked(post: Post) {
         currentPost.value = post
-        navigateToPostContentScreenEvent.value = post.content
+        contentPost.value = post.content
     }
 
     override fun onContentClicked(post: Post) {
-        contentPost.value = post
+        selectedPost.value = post
     }
 
     // endregion PostInteractionListener

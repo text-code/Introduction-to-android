@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -17,17 +16,19 @@ import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
 
-    private val viewModel by viewModels<PostViewModel>()
+    private val viewModel: PostViewModel by viewModels(ownerProducer = ::requireParentFragment)
+
+//    private val viewModel by viewModels<PostViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.shareEvent.observe(this) { post ->
+        viewModel.shareEvent.observe(this) { postContent ->
             val intent = Intent().apply {
                 action = Intent.ACTION_SEND
                 type = "text/plain"
 
-                putExtra(Intent.EXTRA_TEXT, post)
+                putExtra(Intent.EXTRA_TEXT, postContent)
             }
 
             val shareIntent = Intent.createChooser(intent, getString(R.string.share))
@@ -63,17 +64,29 @@ class FeedFragment : Fragment() {
             viewModel.onSaveButtonClicked(newPostContent)
         }
 
-        viewModel.navigateToPostContentScreenEvent.observe(viewLifecycleOwner) { initialContent ->
-            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
-            findNavController().navigate(direction)
+        viewModel.contentPost.observe(viewLifecycleOwner) { initialContent ->
+//            val direction = FeedFragmentDirections.toPostContentFragment(initialContent)
+            findNavController().navigate(
+                R.id.toPostContentFragment,
+                Bundle().apply { textArg = initialContent }
+            )
         }
 
-        viewModel.contentPost.observe(viewLifecycleOwner) {
-            findNavController().navigate(R.id.action_feedFragment_to_postDisplayFragment)
+        viewModel.selectedPost.observe(viewLifecycleOwner) {
+            findNavController().navigate(
+                R.id.action_feedFragment_to_postDisplayFragment,
+                Bundle().apply { idArg = it.id }
+            )
         }
     }.root
 
     companion object {
+        private const val ID_POST_KEY = "ID_POST"
+
         var Bundle.textArg: String? by StringArg
+
+        var Bundle.idArg: Long
+            set(value) = putLong(ID_POST_KEY, value)
+            get() = getLong(ID_POST_KEY)
     }
 }

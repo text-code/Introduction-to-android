@@ -1,9 +1,11 @@
 package ru.netology.nmedia.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -22,17 +24,8 @@ class FeedFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel.shareEvent.observe(this) { postContent ->
-            val intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-
-                putExtra(Intent.EXTRA_TEXT, postContent)
-            }
-
-            val shareIntent = Intent.createChooser(intent, getString(R.string.share))
-            startActivity(shareIntent)
+            context?.let { shareEvent(it, postContent) }
         }
     }
 
@@ -88,5 +81,17 @@ class FeedFragment : Fragment() {
         var Bundle.idArg: Long
             set(value) = putLong(ID_POST_KEY, value)
             get() = getLong(ID_POST_KEY)
+
+        fun shareEvent(context: Context, postContent: String?) {
+            val intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                type = "text/plain"
+
+                putExtra(Intent.EXTRA_TEXT, postContent)
+            }
+
+            val shareIntent = Intent.createChooser(intent, "Share")
+            startActivity(context, shareIntent, null)
+        }
     }
 }

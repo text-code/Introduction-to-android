@@ -11,6 +11,7 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentPostBinding
 import ru.netology.nmedia.ui.FeedFragment.Companion.idArg
+import ru.netology.nmedia.ui.FeedFragment.Companion.shareEvent
 import ru.netology.nmedia.ui.FeedFragment.Companion.textArg
 import ru.netology.nmedia.viewModel.PostViewModel
 
@@ -22,19 +23,8 @@ class PostDisplayFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
         viewModel.shareEvent.observe(this) { postContent ->
-            val intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                type = "text/plain"
-
-                putExtra(Intent.EXTRA_TEXT, postContent)
-            }
-
-            val shareIntent = Intent.createChooser(intent, getString(R.string.share))
-            startActivity(shareIntent)
-            findNavController().navigateUp()
+            context?.let { shareEvent(it, postContent) }
         }
     }
 
@@ -60,8 +50,12 @@ class PostDisplayFragment : Fragment() {
 
 
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val post = posts.first { it.id == arguments?.idArg }
-            viewHolder.bind(post)
+            val post = posts.firstOrNull { it.id == arguments?.idArg }
+            if (post != null) {
+                viewHolder.bind(post)
+            } else {
+                findNavController().navigateUp()
+            }
         }
 
         viewModel.contentPost.observe(viewLifecycleOwner) { text ->
@@ -69,6 +63,9 @@ class PostDisplayFragment : Fragment() {
                 R.id.action_postDisplayFragment_to_postContentFragment,
                 Bundle().apply { textArg = text }
             )
+        }
+
+        viewModel.selectedPost.observe(viewLifecycleOwner) {
         }
 
 

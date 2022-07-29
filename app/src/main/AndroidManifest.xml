@@ -11,29 +11,21 @@
         android:theme="@style/Theme.IntroductionToAndroid">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".activity.ShareActivity"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".activity.NewPostActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false" />
 
     </application>
 

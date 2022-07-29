@@ -91,7 +91,7 @@ class FeedFragment : Fragment() {
             }
 
             val shareIntent = Intent.createChooser(intent, "Share")
-            startActivity(context, shareIntent, null)
+            context.startActivity(shareIntent)
         }
     }
 }

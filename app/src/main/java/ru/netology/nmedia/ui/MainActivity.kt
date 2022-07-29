@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val fragment = supportFragmentManager.findFragmentById(R.id.fragmentContainer) as NavHostFragment
+            fragment.navController.navigateUp()
             fragment.navController
                 .navigate(
                     R.id.toPostContentFragment,

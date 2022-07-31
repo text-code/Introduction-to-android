@@ -3,7 +3,6 @@ package ru.netology.nmedia.data.impl
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.data.PostRepository
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.util.SingleLiveEvent
 
 class InMemoryPostRepository : PostRepository {
 
@@ -20,7 +19,8 @@ class InMemoryPostRepository : PostRepository {
                 id = index + 1L,
                 author = "Person",
                 content = "Any content $index",
-                published = "10.05.2022"
+                published = "10.05.2022",
+                video = "https://www.youtube.com/watch?v=OWX9kov3PX0"
             )
         }
     )

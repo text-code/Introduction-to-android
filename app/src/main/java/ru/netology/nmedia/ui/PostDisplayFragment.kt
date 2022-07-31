@@ -1,6 +1,7 @@
 package ru.netology.nmedia.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -63,6 +64,11 @@ class PostDisplayFragment : Fragment() {
                 R.id.action_postDisplayFragment_to_postContentFragment,
                 Bundle().apply { textArg = text }
             )
+        }
+
+        viewModel.youTubeEvent.observe(viewLifecycleOwner) { url ->
+            val urlEvent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(urlEvent)
         }
 
         viewModel.selectedPost.observe(viewLifecycleOwner) {

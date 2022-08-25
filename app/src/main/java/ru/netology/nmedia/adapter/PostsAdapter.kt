@@ -68,10 +68,9 @@ internal class PostsAdapter(
                 contentPost.text = post.content
                 publicationDate.text = post.published
                 share.text = counter(post.share)
-                share.isChecked = post.shareByMe
                 like.text = counter(post.like)
                 like.isChecked = post.likedByMe
-                youTube.isVisible = post.video != null
+//                youTube.isVisible = post.video != null
             }
         }
 

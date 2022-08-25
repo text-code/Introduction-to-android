@@ -29,6 +29,8 @@ class PostViewModel(
 
     val selectedPost = SingleLiveEvent<Post>()
 
+    val youTubeEvent = SingleLiveEvent<String>()
+
     private val currentPost = MutableLiveData<Post?>(null)
 
     fun onSaveButtonClicked(content: String) {
@@ -40,7 +42,8 @@ class PostViewModel(
             id = PostRepository.NEW_POST_ID,
             author = "Me",
             content = content,
-            published = "Today"
+            published = "Today",
+            video = "https://www.youtube.com/watch?v=OWX9kov3PX0"
         )
         repository.save(post)
         currentPost.value = null
@@ -70,6 +73,10 @@ class PostViewModel(
 
     override fun onContentClicked(post: Post) {
         selectedPost.value = post
+    }
+
+    override fun onVideoClicked(post: Post) {
+        youTubeEvent.value = post.video
     }
 
     // endregion PostInteractionListener

@@ -68,6 +68,17 @@
         android:paddingBottom="@dimen/common_spacing"
         app:layout_constraintTop_toBottomOf="@id/barrier" />
 
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/youTube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_youtube"
+        android:src="@drawable/ic_play_circle_24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/barrierUnderText"
+        app:layout_constraintTop_toBottomOf="@+id/contentPost"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierUnderText"
         android:layout_width="wrap_content"

@@ -70,7 +70,7 @@ internal class PostsAdapter(
                 share.text = counter(post.share)
                 like.text = counter(post.like)
                 like.isChecked = post.likedByMe
-                youTube.isVisible = post.video != null
+//                youTube.isVisible = post.video != null
             }
         }
 

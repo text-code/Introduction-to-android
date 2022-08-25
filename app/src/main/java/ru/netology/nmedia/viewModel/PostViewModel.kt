@@ -43,7 +43,7 @@ class PostViewModel(
             author = "Me",
             content = content,
             published = "Today",
-            video = "https://www.youtube.com/watch?v=OWX9kov3PX0"
+//            video = "https://www.youtube.com/watch?v=OWX9kov3PX0"
         )
         repository.save(post)
         currentPost.value = null
@@ -76,7 +76,7 @@ class PostViewModel(
     }
 
     override fun onVideoClicked(post: Post) {
-        youTubeEvent.value = post.video
+//        youTubeEvent.value = post.video
     }
 
     // endregion PostInteractionListener

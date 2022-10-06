@@ -17,3 +17,11 @@
 * счетчик лайков, share
 
 ![счетчик лайков, share](https://user-images.githubusercontent.com/64940811/194203698-882d59d2-b699-45e3-b389-cd8b530b78d9.gif)
+
+### Было использовано
+* Архитектура: MVVM
+* CRUD
+* Работа со списком: RecyclerView
+* Fragment
+* Material Decign
+* Библиотека Room

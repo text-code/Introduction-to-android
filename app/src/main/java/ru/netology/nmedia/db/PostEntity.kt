@@ -18,9 +18,7 @@ class PostEntity(
     @ColumnInfo(name = "likes")
     val like: Int = 0,
     @ColumnInfo(name = "share")
-    val share: Int = 998,
+    val share: Int = 0,
     @ColumnInfo(name = "likedByMe")
-    val likedByMe: Boolean = false,
-    @ColumnInfo(name = "shareByMe")
-    val shareByMe: Boolean = false
+    val likedByMe: Boolean = false
 )
